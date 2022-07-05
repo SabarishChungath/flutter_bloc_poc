@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc_poc/navigation/routes.dart';
+import 'package:flutter_bloc_poc/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,7 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   nextPage() {
-    Navigator.pushReplacementNamed(context, Routes.homeScreen);
+    Navigator.pushReplacementNamed(context, Routes.homeScreen,
+        arguments: HomeScreenArgs(title: "Flutter Bloc Demo :)"));
   }
 
   @override

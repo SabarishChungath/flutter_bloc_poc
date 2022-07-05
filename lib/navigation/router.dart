@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_poc/blocs/bloc/counter_bloc.dart';
+import 'package:flutter_bloc_poc/navigation/router_utils.dart';
 import 'package:flutter_bloc_poc/navigation/routes.dart';
 import 'package:flutter_bloc_poc/screens/home_screen.dart';
 import 'package:flutter_bloc_poc/screens/spash_screen.dart';
@@ -18,14 +19,18 @@ class Router {
         );
 
       case Routes.homeScreen:
+        if (hasInvalidArgs<HomeScreenArgs>(args)) {
+          return misTypedArgsRoute<HomeScreenArgs>(args);
+        }
+        final typedArgs = args as HomeScreenArgs;
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => CounterBloc(),
-                  child: const MyHomePage(title: "Bloc Demo"),
+                  child: MyHomePage(title: typedArgs.title),
                 ),
             settings: settings);
       default:
-        return null;
+        return unknownPageRoute(settings.name ?? "");
     }
   }
 }

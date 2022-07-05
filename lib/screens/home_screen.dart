@@ -82,3 +82,8 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
+class HomeScreenArgs {
+  String title;
+  HomeScreenArgs({required this.title});
+}
