@@ -21,9 +21,9 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+            // const Text(
+            //   'You have pushed the button this many times:',
+            // ),
             CustomDropDown<String>(
               value: 'All',
               onChange: (value) {
@@ -31,24 +31,24 @@ class MyHomePage extends StatelessWidget {
               },
               items: [
                 DropDownItem<String>(value: 'All'),
-                DropDownItem<String>(value: 'Frozen'),
-                DropDownItem<String>(value: 'Expired'),
-                DropDownItem<String>(value: 'Cancelled-Refund'),
-                DropDownItem<String>(value: 'Closed'),
+                DropDownItem<String>(value: 'Ordered'),
+                DropDownItem<String>(value: 'Pikced'),
+                DropDownItem<String>(value: 'Packed'),
+                DropDownItem<String>(value: 'Delivered'),
               ],
             ),
             // Selector is called when there is a change in bloc state variable.
-            BlocSelector<CounterBloc, CounterState, int>(
-              selector: (state) {
-                return state.count;
-              },
-              builder: (_, count) {
-                return Text(
-                  count.toString(),
-                  style: Theme.of(context).textTheme.headline4,
-                );
-              },
-            )
+            // BlocSelector<CounterBloc, CounterState, int>(
+            //   selector: (state) {
+            //     return state.count;
+            //   },
+            //   builder: (_, count) {
+            //     return Text(
+            //       count.toString(),
+            //       style: Theme.of(context).textTheme.headline4,
+            //     );
+            //   },
+            // )
             // builder is called when there is a change in bloc state.
             // BlocBuilder<CounterBloc, CounterState>(
             //   builder: (context, state) {
