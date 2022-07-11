@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_poc/blocs/counter_bloc/counter_bloc.dart';
+import 'package:flutter_bloc_poc/widgets/custom_dropdown.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -22,6 +23,16 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
+            ),
+            CustomDropDown<String>(
+              value: 'All',
+              items: [
+                DropDownItem<String>(value: 'All'),
+                DropDownItem<String>(value: 'Frozen'),
+                DropDownItem<String>(value: 'Expired'),
+                DropDownItem<String>(value: 'Cancelled-Refund'),
+                DropDownItem<String>(value: 'Closed'),
+              ],
             ),
             // Selector is called when there is a change in bloc state variable.
             BlocSelector<CounterBloc, CounterState, int>(
