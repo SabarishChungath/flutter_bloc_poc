@@ -26,6 +26,9 @@ class MyHomePage extends StatelessWidget {
             ),
             CustomDropDown<String>(
               value: 'All',
+              onChange: (value) {
+                log("Value is: $value");
+              },
               items: [
                 DropDownItem<String>(value: 'All'),
                 DropDownItem<String>(value: 'Frozen'),

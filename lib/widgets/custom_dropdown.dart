@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class CustomDropDown<T> extends StatefulWidget {
   final List<DropDownItem> items;
   final T value;
+  final Function(dynamic) onChange;
 
-  const CustomDropDown({Key? key, required this.items, required this.value})
+  const CustomDropDown(
+      {Key? key,
+      required this.items,
+      required this.value,
+      required this.onChange})
       : super(key: key);
 
   @override
@@ -131,7 +136,7 @@ class _CustomDropDownState extends State<CustomDropDown>
                 child: Material(
                   child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.greenAccent,
+                        color: Colors.white,
                         border: Border.all(color: const Color(0XFFCDCDCD)),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
@@ -139,14 +144,33 @@ class _CustomDropDownState extends State<CustomDropDown>
                       child: Column(
                         children: [
                           ...widget.items
-                              .map((item) => Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 16, bottom: 16, left: 16),
-                                    child: SizedBox(
-                                        width: double.maxFinite,
-                                        child: Text(item.value
-                                            .toString()
-                                            .toUpperCase())),
+                              .map((item) => GestureDetector(
+                                    onTap: () {
+                                      widget.onChange(item.value);
+                                      setState(() {
+                                        isAnimating = true;
+                                      });
+                                      controller.reverse();
+                                      Future.delayed(animationDuration, () {
+                                        setState(() {
+                                          isAnimating = false;
+                                        });
+                                        dropdownOverlay?.remove();
+                                      });
+                                      setState(() {
+                                        isOpen = !isOpen;
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      color: Colors.transparent,
+                                      padding: const EdgeInsets.only(
+                                          top: 14, bottom: 14, left: 16),
+                                      child: Text(
+                                        item.value.toString().toUpperCase(),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
                                   ))
                               .toList()
                         ],
@@ -162,7 +186,6 @@ class _CustomDropDownState extends State<CustomDropDown>
 }
 
 class DropDownItem<T> {
-  // Function(T)? onChange;
   T? value;
   DropDownItem({this.value});
 }
