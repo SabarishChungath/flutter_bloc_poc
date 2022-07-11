@@ -91,7 +91,7 @@ class _CustomDropDownState extends State<CustomDropDown>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.items.first.value,
+              widget.value,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
             RotationTransition(
