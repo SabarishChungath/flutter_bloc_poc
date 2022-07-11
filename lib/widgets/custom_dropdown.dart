@@ -24,6 +24,9 @@ class _CustomDropDownState extends State<CustomDropDown>
   //state to check if dropdown is open
   bool isOpen = false;
 
+  //bool for animation to avoid memory leaks when animating(scneario comes in monkey testing)
+  bool isAnimating = false;
+
   //position variables for the dropdown.
   late double xPosition, yPosition, dHeight, dWidth;
 
@@ -51,19 +54,29 @@ class _CustomDropDownState extends State<CustomDropDown>
     return GestureDetector(
       key: positionKey,
       onTap: () {
-        setState(() {
-          if (isOpen) {
-            controller.reverse();
-            Future.delayed(animationDuration, () {
-              dropdownOverlay?.remove();
-            });
-          } else {
-            getDropDownPosition();
-            dropdownOverlay = _dropdownBox();
-            Overlay.of(context)?.insert(dropdownOverlay!);
-            controller.forward();
-          }
+        if (isAnimating) {
+          return;
+        }
 
+        if (isOpen) {
+          setState(() {
+            isAnimating = true;
+          });
+          controller.reverse();
+
+          Future.delayed(animationDuration, () {
+            setState(() {
+              isAnimating = false;
+            });
+            dropdownOverlay?.remove();
+          });
+        } else {
+          getDropDownPosition();
+          dropdownOverlay = _dropdownBox();
+          Overlay.of(context)?.insert(dropdownOverlay!);
+          controller.forward();
+        }
+        setState(() {
           isOpen = !isOpen;
         });
       },
